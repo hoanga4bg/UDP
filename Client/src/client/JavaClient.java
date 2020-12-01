@@ -35,7 +35,7 @@ public class JavaClient {
         byte[] init = new byte[1024];
         init = "givedata".getBytes();
         
-        InetAddress addr = InetAddress.getLocalHost();
+        InetAddress addr = InetAddress.getByName("192.168.0.104");
         
         DatagramPacket dp = new DatagramPacket(init,init.length,addr,4321);    
         ds.send(dp);
@@ -61,7 +61,7 @@ public class JavaClient {
         s.start();
         String modifiedSentence;
 
-        InetAddress inetAddress = InetAddress.getLocalHost();
+        InetAddress inetAddress =  InetAddress.getByName("192.168.0.104");
         
         System.out.println(inetAddress);
 
