@@ -20,7 +20,7 @@ import javax.swing.*;
 //import com.sun.jna.NativeLibrary;
 import data.Canvas_Demo;
 import data.SThread;
-import data.Sentencefromserver;
+
 import data.Vidthread;
 import java.io.DataInputStream;
 
@@ -109,9 +109,8 @@ public class JavaServer {
 			st[i].start();
 			
 			
-                        Sentencefromserver sen = new Sentencefromserver();
-                        sen.start();
-//			System.out.println(inet[i]);
+//                        Sentencefromserver sen = new Sentencefromserver();
+//                        sen.start();
 			sendvid.start();
 
 			i++;

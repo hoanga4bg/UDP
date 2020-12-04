@@ -35,8 +35,8 @@ public class JavaClient {
         byte[] init = new byte[1024];
         init = "givedata".getBytes();
         
-        InetAddress addr = InetAddress.getByName("192.168.0.104");
-        
+//        InetAddress addr = InetAddress.getByName("192.168.0.104");
+         InetAddress addr  =InetAddress.getLocalHost();
         DatagramPacket dp = new DatagramPacket(init,init.length,addr,4321);    
         ds.send(dp);
         DatagramPacket rcv = new DatagramPacket(init, init.length);
@@ -54,27 +54,27 @@ public class JavaClient {
         dsVoice.receive(rcvVoice);
         
        
-         Vidshow vd = new Vidshow();
-        vd.start();
+       
         
         SoundThread s=new SoundThread();
         s.start();
         String modifiedSentence;
 
-        InetAddress inetAddress =  InetAddress.getByName("192.168.0.104");
-        
+//        InetAddress inetAddress =  InetAddress.getByName("192.168.0.104");
+        InetAddress inetAddress =  InetAddress.getLocalHost();
         System.out.println(inetAddress);
 
         Socket clientSocket = new Socket(inetAddress, 6782);
         DataOutputStream outToServer =
                 new DataOutputStream(clientSocket.getOutputStream());
-
+        
         DataInputStream inFromServer=new DataInputStream(clientSocket.getInputStream());
         outToServer.writeUTF("Đã tham gia!");
-
-        CThread read = new CThread(inFromServer, outToServer);
         
-      
+        
+        Vidshow vd = new Vidshow(outToServer);
+        vd.start();
+        CThread read = new CThread(inFromServer, outToServer);
         read.join();
         clientSocket.close();
     }

@@ -48,7 +48,7 @@ public class SoundThread extends Thread{
         }            
      }
     public static AudioFormat getAudioFormat() {
-        float sampleRate = 22050.0F;
+        float sampleRate = 16000.0F;
         //8000,11025,16000,22050,44100
         int sampleSizeInBits = 16;
         //8,16

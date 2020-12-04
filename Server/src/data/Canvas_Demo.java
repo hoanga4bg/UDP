@@ -11,6 +11,7 @@ package data;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
+
 import static data.SoundThread.getAudioFormat;
 import static data.SoundThread.sendThruUDP;
 import static data.SoundThread.targetDataLine;
@@ -23,6 +24,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioSystem;
@@ -39,6 +41,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import server.JavaServer;
 
 //import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 //import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -63,8 +66,8 @@ public class Canvas_Demo {
 	public static JTextArea ta;
 	public static JTextArea txinp;
 	public static int xpos = 0, ypos = 0;
-        public static JLabel jl;
-      
+        public static JLabel lable;
+        
 	String url = "";
         public TargetDataLine targetDataLine;
         public SoundThread s;
@@ -83,11 +86,10 @@ public class Canvas_Demo {
 		JPanel mypanel = new JPanel();
 		mypanel.setLayout(new GridLayout(2, 1));
 
-		
-		canvas = new Canvas();
-		canvas.setBackground(Color.BLACK);
-		
-		panel.add(canvas, BorderLayout.CENTER);
+		lable=new JLabel();
+                lable.setBackground(Color.black);
+		lable.setSize(640,320);
+		panel.add(lable, BorderLayout.CENTER);
 		
 	
 
@@ -260,13 +262,23 @@ public class Canvas_Demo {
                     
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Sentencefromserver.sendingSentence = txinp.getText();
-				
-				Canvas_Demo.ta.append("From Myself: " + Sentencefromserver.sendingSentence + "\n");
-				Canvas_Demo.myjp.revalidate();
-				Canvas_Demo.myjp.repaint();
-                                txinp.setText(null);
+			    String sentence = txinp.getText();
+                             txinp.setText(null);
+                            if (sentence.length() > 0) {
+                                ta.append("From Myself: " + sentence + "\n");
+                                for (int i = 0; i < JavaServer.i; i++) {
+                                    try {
+                                        JavaServer.outToClient[i].writeUTF("From Server: " + sentence);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(Canvas_Demo.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+
+                                }
+                               sentence = null;
+                            }
+                            Canvas_Demo.myjp.revalidate();
+                            Canvas_Demo.myjp.repaint();
+                           
 			}
 		});
 

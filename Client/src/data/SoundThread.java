@@ -47,7 +47,7 @@ public class SoundThread extends Thread {
 
             DatagramPacket datagram = new DatagramPacket(soundpacket, soundpacket.length);
             JavaClient.dsVoice.receive(datagram);
-            JavaClient.dsVoice.close();
+//            JavaClient.dsVoice.close();
             return datagram.getData(); // soundpacket ;
         } catch (Exception e) {
             System.out.println(" Unable to send soundpacket using UDP ");

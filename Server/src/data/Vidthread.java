@@ -58,10 +58,10 @@ public class Vidthread extends Thread{
 				mybuf = rb.createScreenCapture(capture); 
                                 
                                 
-                                BufferedImage outputImage = new BufferedImage(840,
-                                        420, mybuf.getType());
+                                BufferedImage outputImage = new BufferedImage(800,
+                                        500, mybuf.getType());
                                 Graphics2D g2d = outputImage.createGraphics();
-                                g2d.drawImage(mybuf, 0, 0, 840,420, null);
+                                g2d.drawImage(mybuf, 0, 0, 800,500, null);
                                 g2d.dispose();
                                 
 				img = new ImageIcon(mybuf);				
@@ -78,7 +78,7 @@ public class Vidthread extends Thread{
 					dataSoc.send(dp);
 					baos.flush();
 				}
-				Thread.sleep(5);
+				Thread.sleep(10);
 
 				
 			} catch (Exception e) {
